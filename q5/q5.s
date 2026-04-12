@@ -1,4 +1,4 @@
-#assuming no new line char if its there then checking it together for the palindrome
+#assuming no new line char if its there then checking it together for the palindrome and that input.txt is always provided as mentioned in the pdf.
 .section .rodata
 filename:
     .string "input.txt"
