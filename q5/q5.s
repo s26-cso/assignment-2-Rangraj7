@@ -2,7 +2,7 @@
 .section .rodata
 filename:
     .string "input.txt"
-filereadmode:
+filereadmode:   #we just have to read the file so readmode "r"=read
     .string "r"
 print_yes:
     .string "Yes"
@@ -48,7 +48,7 @@ check_palindrome:
     sd ra,24(sp)
 
     addi s1,x0,0    #s1=left index
-    jal ra,length_s2
+    jal ra,length_s2    #calling function length+s2 and storing the length of the palindrome in s2 register
     jal x0,check_palindrome_loop
 
 length_s2:
@@ -56,8 +56,8 @@ length_s2:
     sd ra,0(sp)
     add a0,s4,x0
     addi a1,x0,0
-    addi a2,x0,2
-    jal ra,fseek    #a2=2 corresponds to SEEK_END in c
+    addi a2,x0,2    #a2=2 corresponds to SEEK_END in c
+    jal ra,fseek
 
     addi a0,s4,0
     jal ra,ftell    #ftell given the length of string
@@ -82,42 +82,42 @@ check_palindrome_loop:
     jal ra,fgetc
     addi t0,a0,0    #right index char
 
-    bne t0,s3,palindrome_false
-    addi s1,s1,1
-    addi s2,s2,-1
-    jal x0,check_palindrome_loop
+    bne t0,s3,palindrome_false  #if left and right char are not equal jump to the case that the string is not a palindrome
+    addi s1,s1,1    #left index++
+    addi s2,s2,-1   #right index--
+    jal x0,check_palindrome_loop    #again jump to check_palindrome_loop to check for the new left and right indices
 
-palindrome_true:
-    la a0,string_format
-    la a1,print_yes
-    jal ra,printf
-    jal x0,exit_check_palin
+palindrome_true:    #if the string is a palindrome
+    la a0,string_format     #argument 1 for the printf function, "%s"
+    la a1,print_yes     #argument 2 for the printf function, "Yes"
+    jal ra,printf   #call printf
+    jal x0,exit_check_palin     #goto exit_check_palin function
 
-palindrome_false:
+palindrome_false:   #if string is not a palindrome
     la a0,string_format
     la a1,print_no
     jal ra,printf
     
-exit_check_palin:
+exit_check_palin:   #restore all the saved registers used and make the stack pointer as before
     ld ra,24(sp)
     ld s1,0(sp)
     ld s2,8(sp)
     ld s3,16(sp)
     addi sp,sp,32
-    jalr x0,0(ra)
+    jalr x0,0(ra)   #jump back to return address stored in the return address register
 
-exit_fopen:
+exit_fopen:     #reallocate the stack pointer
     ld ra,0(sp)
     ld s0,8(sp)
     ld s4,16(sp)
     addi sp,sp,32
-    jalr x0,0(ra)
+    jalr x0,0(ra)   #jump to saved return address
 
-exit_fopen_2:
+exit_fopen_2:   #reallocate the stack pointer
     add a0,s0,x0
-    jal ra,fclose
+    jal ra,fclose   #close the file from the file pointer
     ld ra,0(sp)
     ld s0,8(sp)
     ld s4,16(sp)
     addi sp,sp,32
-    jalr x0,0(ra)
+    jalr x0,0(ra)   #jump to saved return address

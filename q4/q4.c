@@ -16,7 +16,7 @@ int main(){
 
         void* lib=dlopen(filename,RTLD_LAZY);  //trying to open the library at runtime
         if(lib){   //if there's some error while loading the library don't check for the function inside it
-            func function=dlsym(lib,op);   //check for the the lib inside the library module
+            func function=dlsym(lib,op);   //check for the the function inside the library module
             if(function){   //if the function found then execute it with the given values of num1 and num2
                 int ans=function(num1,num2);
                 printf("%d\n",ans);
