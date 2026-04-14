@@ -1,6 +1,8 @@
 .section .rodata
 output_format:
     .string "%d "
+next_line:
+    .string "\n"
 
 .section .text
 .globl main
@@ -123,6 +125,8 @@ print_answer_loop:  #iterate from left to right in the ans array and print eleme
     beq x0,x0,print_answer_loop
 
 exit_all:   #restore the saved registers used and return address and return
+    la a0,next_line
+    call printf
     addi a0,s3,0
     jal ra,free
     addi a0,s7,0
