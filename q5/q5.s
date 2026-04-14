@@ -71,16 +71,16 @@ check_palindrome_loop:
     bge s1,s2,palindrome_true   #if left index equals or becomes greater than right index, its a palindrome
     
     addi a0,s0,0    #reading left char using s0
-    jal ra,fgetc
+    jal ra,fgetc    #fgetc moves pointer automatically +1 byte forward
     addi s3,a0,0    #left index char
 
     addi a0,s4,0    #reading right char using s4
-    addi a1,s2,0
-    addi a2,x0,0
-    jal ra,fseek
+    addi a1,s2,0    #a1=s2 right side current index
+    addi a2,x0,0    #a2=0 seekset, offset from start of file
+    jal ra,fseek    #force cursor pointer to index s2
     addi a0,s4,0
-    jal ra,fgetc
-    addi t0,a0,0    #right index char
+    jal ra,fgetc    #readd the char at index s2
+    addi t0,a0,0    #store right index char in t0
 
     bne t0,s3,palindrome_false  #if left and right char are not equal jump to the case that the string is not a palindrome
     addi s1,s1,1    #left index++

@@ -10,15 +10,15 @@ main:
     sd ra,0(sp)
     sd s0,8(sp)     #total elements(n)
     sd s1,16(sp)
-    sd s2,24(sp)
-    sd s3,32(sp)
+    sd s2,24(sp)    #stores start index
+    sd s3,32(sp)    #base pointer for nums array
     sd s4,40(sp)
     sd s5,48(sp)
     sd s6,56(sp)
-    sd s7,64(sp)
+    sd s7,64(sp)    #base pointer for ans array
     sd s8,72(sp)
     sd s10,80(sp)
-    sd s11,88(sp)
+    sd s11,88(sp)   #base pointer for stack array
 
     addi s0,a0,-1    #total no. of numbers given
     addi s1,a1,8    #pointer to the array of elements skipping the first element given as command line arguments
@@ -123,6 +123,12 @@ print_answer_loop:  #iterate from left to right in the ans array and print eleme
     beq x0,x0,print_answer_loop
 
 exit_all:   #restore the saved registers used and return address and return
+    addi a0,s3,0
+    jal ra,free
+    addi a0,s7,0
+    jal ra,free
+    addi a0,s11,0
+    jal ra,free
 
     ld ra,0(sp)
     ld s0,8(sp)
