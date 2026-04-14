@@ -5,9 +5,9 @@ filename:
 filereadmode:   #we just have to read the file so readmode "r"=read
     .string "r"
 print_yes:
-    .string "Yes"
+    .string "Yes\n"
 print_no:
-    .string "No"
+    .string "No\n"
 string_format:
     .string "%s"
 
