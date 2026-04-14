@@ -1,3 +1,4 @@
+//assume that each line has format <op> <num1> <num2> as given
 #include<stdio.h>
 #include<dlfcn.h>
 #include<string.h>
