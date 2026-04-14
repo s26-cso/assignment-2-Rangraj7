@@ -111,6 +111,7 @@ exit_fopen:     #reallocate the stack pointer
     ld s0,8(sp)
     ld s4,16(sp)
     addi sp,sp,32
+    addi a0,x0,0
     jalr x0,0(ra)   #jump to saved return address
 
 exit_fopen_2:   #reallocate the stack pointer
@@ -120,4 +121,5 @@ exit_fopen_2:   #reallocate the stack pointer
     ld s0,8(sp)
     ld s4,16(sp)
     addi sp,sp,32
+    addi a0,x0,0
     jalr x0,0(ra)   #jump to saved return address

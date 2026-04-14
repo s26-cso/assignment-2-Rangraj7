@@ -143,5 +143,6 @@ exit_all:   #restore the saved registers used and return address and return
     ld s10,80(sp)
     ld s11,88(sp)
     addi sp,sp,96
+    addi a0,x0,0
     jalr x0,0(ra)
     
