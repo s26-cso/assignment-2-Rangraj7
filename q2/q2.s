@@ -2,7 +2,7 @@
 output_format:
     .string "%d "
 next_line:
-    .string "\n"
+    .string "%d\n"
 
 .section .text
 .globl main
@@ -115,6 +115,8 @@ print_answer:
 
 print_answer_loop:  #iterate from left to right in the ans array and print elements calculated for each index
     beq s2,s0,exit_all
+    addi t3,s0,-1
+    beq t3,s2,last_integer
     la a0,output_format
     slli t0,s2,3
     add t0,s7,t0
@@ -124,9 +126,15 @@ print_answer_loop:  #iterate from left to right in the ans array and print eleme
     addi s2,s2,1
     beq x0,x0,print_answer_loop
 
-exit_all:   #restore the saved registers used and return address and return
+last_integer:
     la a0,next_line
+    slli t0,s2,3
+    add t0,s7,t0
+    ld t0,0(t0)
+    add a1,t0,x0
     call printf
+
+exit_all:   #restore the saved registers used and return address and return
     addi a0,s3,0
     jal ra,free
     addi a0,s7,0
